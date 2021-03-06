@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>eelテスト</title>
+        <link rel="stylesheet" href="./style.css">
+    </head>
+    <body>
+        <h2>eelテスト</h2>
+            <p>CSVファイル名：<input type="text" name="file_name"> </p>
+            
+            <p>検索ワード：<input type="text" name = "search_word">
+                <input type="button" id = "button" name="submit1" value="検索1">
+            </p>
+            <textarea class = "textarea_content" name="log"　wrap = "soft"></textarea>
+        <script type="text/javascript" src="./eel.js"></script>
+        <script>
+            const search = document.getElementById("button")
+            const searchname = document.getElementsByName("submit1")[0]
+            
+            searchname.addEventListener('click', () => {
+                let filename = document.getElementsByName("file_name")[0].value
+                let word = document.getElementsByName("search_word")[0].value
+                let result_in_textarea = document.getElementsByName("log")[0].value
+
+                if(filename == ""){
+                    alert("please input csvfile space")
+                }else{
+                    word_search()
+                }
+
+                async function word_search(){
+                    result = await eel.kimetsu_search(word,filename)()
+                    result_in_textarea += result + '\n'
+                    document.getElementsByName("log")[0].value = result_in_textarea
+                }
+            })
+
+            eel.expose(view_log_js)
+            function view_log_js(text){
+            }
+        </script>
+    </body>
+</html>
