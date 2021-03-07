@@ -1,18 +1,26 @@
 import pandas as pd
 import eel
 import os
+import sys
 
 ### デスクトップアプリ作成課題
 def kimetsu_search(word, filename):
     # 検索対象取得
-    csvfile_path = "./" + filename
+    #pyinstallerの実行場所が/users/userだったため、実行ファイル下の場所を取得
+    current_dir = os.path.dirname(sys.argv[0])
+    #実行環境で変更
+    if current_dir == "":
+        csvfile_path = "./" + filename
+    else:
+        csvfile_path = current_dir + "/" +filename
+
     if os.path.exists(filename) == True:
         pass
     else:
         back = "File:『{}』が存在しません".format(csvfile_path)
         return back
 
-    df=pd.read_csv("./source.csv")
+    df=pd.read_csv(csvfile_path)
     source=list(df["name"])
 
     # 検索
